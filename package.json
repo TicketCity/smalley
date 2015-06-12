@@ -1,0 +1,26 @@
+{
+  "name": "smalley",
+  "version": "0.0.1",
+  "description": "Validates data passed in against a validation definition config.",
+  "main": "smalley.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "validate",
+    "smalley",
+    "affirm"
+  ],
+  "author": "cmoses@ticketcity.com",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "should": "^6.0.3"
+  },
+  "dependencies": {
+    "app-root-path": "^1.0.0",
+    "async": "^1.2.1",
+    "glob": "^5.0.10",
+    "validator": "^3.40.0"
+  }
+}

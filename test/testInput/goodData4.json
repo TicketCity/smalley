@@ -1,0 +1,13 @@
+{
+  "email": "npeacock@netsuite.com",
+  "items": [{
+    "lineItemId": "12345678-1",
+    "eventId": 1042459,
+    "quantity": 1,
+    "rate": 100.50,
+    "serviceCharge": 20.50,
+    "total": 121.00,
+    "section": "101",
+    "row": "1A"
+  }]
+}

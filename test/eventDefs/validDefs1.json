@@ -1,0 +1,42 @@
+{
+	"email" : {
+		"type"		: "[object String]",
+		"require"	: true
+	},
+	"items" : {
+		"type"		: "[object Array]",
+		"require"	: true
+	},
+	"lineItemId" : {
+		"type"		: "[object String]",
+		"require"	: true
+	},
+	"eventId" : {
+		"type"		: "[object Number]",
+		"require"	: true
+	},
+	"quantity" : {
+		"type"		: "[object Number]",
+		"require"	: true
+	},
+	"rate"  : {
+		"type"		: "[object Number]",
+		"require"	: true
+	},
+	"serviceCharge" : {
+		"type"		: "[object Number]",
+		"require"	: true
+	},
+	"total" : {
+		"type"		: "[object Number]",
+		"require"	: true
+	},
+	"section" : {
+		"type"		: "[object String]",
+		"require"	: true
+	},
+	"row" : {
+		"type"		: "[object String]",
+		"require"	: true
+	}
+}

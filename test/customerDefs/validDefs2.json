@@ -1,0 +1,23 @@
+{
+	"firstName" : {
+		"type" 		: "[object String]",
+		"require" 	: true
+	},
+	"lastName" : {
+		"type": "[object String]",
+		"require": true
+	},
+	"phone" : {
+		"type" 		: "[object String]",
+		"require" 	: true
+	}
+	,
+	"address" : {
+		"type": "[object Object]",
+		"require": false
+	},
+	"city" : {
+		"type": "[object String]",
+		"require": false
+	}
+}
