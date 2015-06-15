@@ -1,14 +1,14 @@
 {
   "name": "smalley",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Validates data passed in against a validation definition config.",
   "main": "smalley.js",
   "scripts": {
     "test": "mocha"
   },
-  "repository" :
-  { "type" : "git",
-    "url" : "https://github.com/ctmoses/smalley"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ctmoses/smalley"
   },
   "keywords": [
     "validate",
