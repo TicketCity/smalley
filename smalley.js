@@ -15,7 +15,7 @@ module.exports.validate = function(input, callback){
 					//	and flattens the given object.
 					preValidation(input, function(err, results) {
 						if(err)
-							callback(err);
+							wfCallback(err);
 							
 						else
 							wfCallback(null, results);
@@ -27,7 +27,7 @@ module.exports.validate = function(input, callback){
 				function(data, wfCallback){
 					validationRunner(data[1], data[0], function(err, results) {
 						if(err){
-							callback(err);
+							wfCallback(err);
 						}
 						else{
 							wfCallback(null, results);
@@ -66,13 +66,14 @@ var validationRunner = function(data, definitions, callback) {
 		}
 	}
 
-	// start type checking -----------------------------------------------------------
+	// start checking attributes against defs-----------------------------------------------------------
 	for(var attr in data) {
 			
 		
 		if(definitions[attr] !== undefined){	
 			async.parallel(
 				[
+					//Match types to defs
 					function(pCallback) {
 						typeCheck(data, attr, definitions, noDef, function(err, results) {
 							if(err)
@@ -83,9 +84,18 @@ var validationRunner = function(data, definitions, callback) {
 	
 						});
 					},
+					//if a regexp is defined, check for matching
+					function(pCallback) {
+						matchCheck(data, attr, definitions, function(err, results) {
+							if(err)
+								callback(err);
+							else
+								pCallback(null, results);
+						});
+					},
 					
 					function(pCallback) {
-						match(data, attr, definitions, function(err, results) {
+						lengthCheck(data, attr, definitions, function(err, results) {
 							if(err)
 								callback(err);
 							else
@@ -133,7 +143,7 @@ var typeCheck = function(data, attr, definitions, noDef, callback) {
 //	Input- data <object>, attr, definitions<object>, callback <function>
 //	Output- err <Error>, message <String>
 //=======================================================================================================
-var match = function(data, attr, definitions, callback) {
+var matchCheck = function(data, attr, definitions, callback) {
 		if(definitions[attr].match !== undefined){
 			var reg = new RegExp(definitions[attr].match);
 			if(reg.test(data[attr]))
@@ -144,6 +154,23 @@ var match = function(data, attr, definitions, callback) {
 		
 		else
 			callback(null, "No regex to match");
+};
+
+// Length ===============================================================================================
+//	Input- data <object>, attr, definitions<object>, callback <function>
+//	Output- err <Error>, message <String>
+//=======================================================================================================
+var lengthCheck = function(data, attr, definitions, callback) {
+	if(definitions[attr].hasOwnProperty("minLength") && definitions[attr].hasOwnProperty("maxLength")){
+		if(definitions[attr].minLength > data[attr].length)
+			callback(data[attr] + " does not meet the defined minmum length requirements.");
+			
+		if(definitions[attr].maxLength < data[attr].length)
+			callback(data[attr] + " does not meet the defined maximum length requirements.");
+	}
+	
+	else
+		callback(null, "Good length");
 };
 
 
