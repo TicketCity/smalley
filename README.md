@@ -35,7 +35,7 @@
 ```javascript
 var smalley = require('smalley')
 var testData = \{data: \{your object to test}, dataDefinition: \'path/to/your/defs\'}
-smalley(testData, function(err, res) {
+smalley.validate(testData, function(err, res) {
 	if(err) 
 		...do something with your err
 	else
