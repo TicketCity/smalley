@@ -26,7 +26,7 @@ describe('#Smalley Val Def Import Tests', function() {
 		
 		smalley.validate({data: goodInput, definitionPath: 'test/customerDefs'}, function(err, results) {
 			should.not.exist(err);
-			results.should.equal("Could not validate dojo, callSign, but everything else was valid.")
+			results.should.equal("Could not validate dojo, callSign, but everything else was valid.");
 			done();
 		});
 	});
@@ -37,7 +37,7 @@ describe('#Smalley Val Def Import Tests', function() {
 		
 		smalley.validate({data: goodInput, definitionPath: 'test/customerDefs'}, function(err, results) {
 			should.not.exist(err);
-			results.should.equal("Could not validate zip, but everything else was valid.")
+			results.should.equal("Could not validate zip, but everything else was valid.");
 			done();
 		});
 	});
@@ -48,7 +48,18 @@ describe('#Smalley Val Def Import Tests', function() {
 		
 		smalley.validate({data: goodInput, definitionPath: 'test/eventDefs'}, function(err, results) {
 			should.not.exist(err);
-			results.should.equal("Data was validated.")
+			results.should.equal("Data was validated.");
+			done();
+		});
+	});
+	
+	it('Should validate data that matches regex', function(done) {
+		var smalley 	= require('../smalley');
+		var goodInput	= require(appRoot + '/test/testInput/goodData4');
+		
+		smalley.validate({data: goodInput, definitionPath: 'test/regexDefs/'}, function(err, results) {
+			should.not.exist(err);
+			results.should.equal("Data was validated.");
 			done();
 		});
 	});
@@ -73,6 +84,17 @@ describe('#Smalley Val Def Import Tests', function() {
 		smalley.validate({data: badInput, definitionPath: 'test/customerDefs'}, function(err, results) {
 			should.exist(err);
 			err.toString().should.equal('Error: The type ([object Number]) did not match the definition type [object String].');
+			done();
+		});
+	});
+	
+	it('Should return an error with mismatched regex', function(done) {
+		var smalley 	= require('../smalley');
+		var badInput	= require(appRoot + '/test/testInput/badData3'); 
+		
+		smalley.validate({data: badInput, definitionPath: 'test/regexDefs'}, function(err, results) {
+			should.exist(err);
+			err.toString().should.equal('Error: testTest2email.com does not match the defined regular expression.');
 			done();
 		});
 	});

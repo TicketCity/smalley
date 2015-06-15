@@ -11,11 +11,11 @@ module.exports.validate = function(input, callback){
 				// Get the definitions ----------------------------------------
 				function(wfCallback) {
 					
-					// The parallel here function simultaneously grabs the definitions from the given folder
+					// The preValidation here function simultaneously grabs the definitions from the given folder
 					//	and flattens the given object.
-					parallel(input, function(err, results) {
+					preValidation(input, function(err, results) {
 						if(err)
-							wfCallback(err);
+							callback(err);
 							
 						else
 							wfCallback(null, results);
@@ -27,10 +27,9 @@ module.exports.validate = function(input, callback){
 				function(data, wfCallback){
 					validationRunner(data[1], data[0], function(err, results) {
 						if(err){
-							wfCallback(err);
+							callback(err);
 						}
 						else{
-
 							wfCallback(null, results);
 						}
 					});
@@ -72,44 +71,87 @@ var validationRunner = function(data, definitions, callback) {
 			
 		
 		if(definitions[attr] !== undefined){	
-			//check type---------------------------------------------
-			typeCheck(data, attr, definitions, noDef, function(err, results) {
-				if(err)
-					callback(err);
-				
-				else 
-					noDef = results;
-			});
+			async.parallel(
+				[
+					function(pCallback) {
+						typeCheck(data, attr, definitions, noDef, function(err, results) {
+							if(err)
+								pCallback(err);
+	
+							else
+								pCallback(null, noDef);
+	
+						});
+					},
+					
+					function(pCallback) {
+						match(data, attr, definitions, function(err, results) {
+							if(err)
+								callback(err);
+							else
+								pCallback(null, results);
+						});
+					}
+				],
+				function(err, finished){
+					if(err){
+						callback(err);
+					}
+					
+					else{
+						noDef = finished[0];
+						callback(null, finished[0])
+					}
+				});
 		}
 		
 		else {
 			noDef.push(attr);
+			callback(null, noDef);
 		}
-	}
-	
-	callback(null, noDef);
+	}	
 };
 
 
 // TypeCheck ============================================================================================
-//	Input- attrType <string>, defType <string>, callback <function>
+//	Input- data <object>, defType <string>, callback <function>
 //	Output- err <Error>, message <string>
 //=======================================================================================================
 var typeCheck = function(data, attr, definitions, noDef, callback) {
 	var classCheck	= {}.toString;	
 		
-	if(classCheck.call(data[attr]).toString() !==  definitions[attr].type.toString()) 
+	if(classCheck.call(data[attr]).toString() !==  definitions[attr].type.toString()) {
 		callback(new Error("The type (" + classCheck.call(data[attr]).toString() + ") did not match the definition type " + definitions[attr].type + "."));
+	}
 
-	else
+	else {
 		callback(null, noDef);
+	}
 }
 
-// Parallel  ============================================================================================
+// Match ================================================================================================
+//	Input- data <object>, attr, definitions<object>, callback <function>
+//	Output- err <Error>, message <String>
+//=======================================================================================================
+var match = function(data, attr, definitions, callback) {
+		if(definitions[attr].match !== undefined){
+			var reg = new RegExp(definitions[attr].match);
+			if(reg.test(data[attr]))
+				callback(null, "Matches regexp.");
+			else
+				callback(new Error(data[attr] + " does not match the defined regular expression."));
+		}
+		
+		else
+			callback(null, "No regex to match");
+};
+
+
+// preValidation  =======================================================================================
 //	Input- input<object> (has definitionPath and data attributes)
 //	Output- results <array> (results[0] = definitions, results[1] = flattnened object)
 //=======================================================================================================
-var parallel = function(input, callback) {
+var preValidation = function(input, callback) {
 	async.parallel(
 		[
 			//get the definitions read in
@@ -134,3 +176,4 @@ var parallel = function(input, callback) {
 			callback(null, res);
 		});
 }
+
