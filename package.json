@@ -12,8 +12,12 @@
     "smalley",
     "affirm"
   ],
-  "author": "cmoses@ticketcity.com",
-  "license": "ISC",
+  "author": {
+    "name": "Chris Moses",
+    "email": "cmoses@ticketcity.com",
+    "url": "http://ticketcity.com"
+  },
+  "license": "MIT",
   "devDependencies": {
     "mocha": "^2.2.5",
     "should": "^6.0.3"
