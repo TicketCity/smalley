@@ -15,7 +15,7 @@ describe('#Get Validation Definition Tests', function() {
 							"city"		: {"type"	: "[object String]", "require"	: false}
 						};
 		
-		getValDefs('test/customerDefs/', function(err, defs) {
+		getValDefs('/test/customerDefs/', function(err, defs) {
 			should.not.exist(err);
 			should.deepEqual(defs, expected);
 			done();
