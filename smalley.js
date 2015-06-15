@@ -1,8 +1,9 @@
 'use strict';
-var getValDefs	= require('./lib/getValDefs'),
+var appRoot		= require('app-root-path'),
+	getValDefs	= require('./lib/getValDefs'),
 	async		= require('async'),
 	unwind		= require('./lib/unwind'),
-	validator	= require('validator');
+	validators	= require('./lib/validators');
 
 
 module.exports.validate = function(input, callback){
@@ -75,7 +76,7 @@ var validationRunner = function(data, definitions, callback) {
 				[
 					//Match types to defs
 					function(pCallback) {
-						typeCheck(data, attr, definitions, noDef, function(err, results) {
+						validators.typeCheck(data, attr, definitions, noDef, function(err, results) {
 							if(err)
 								pCallback(err);
 	
@@ -86,18 +87,18 @@ var validationRunner = function(data, definitions, callback) {
 					},
 					//if a regexp is defined, check for matching
 					function(pCallback) {
-						matchCheck(data, attr, definitions, function(err, results) {
+						validators.matchCheck(data, attr, definitions, function(err, results) {
 							if(err)
-								callback(err);
+								pCallback(err);
 							else
 								pCallback(null, results);
 						});
 					},
 					
 					function(pCallback) {
-						lengthCheck(data, attr, definitions, function(err, results) {
+						validators.lengthCheck(data, attr, definitions, function(err, results) {
 							if(err)
-								callback(err);
+								pCallback(err);
 							else
 								pCallback(null, results);
 						});
@@ -122,56 +123,6 @@ var validationRunner = function(data, definitions, callback) {
 	}	
 };
 
-
-// TypeCheck ============================================================================================
-//	Input- data <object>, defType <string>, callback <function>
-//	Output- err <Error>, message <string>
-//=======================================================================================================
-var typeCheck = function(data, attr, definitions, noDef, callback) {
-	var classCheck	= {}.toString;	
-		
-	if(classCheck.call(data[attr]).toString() !==  definitions[attr].type.toString()) {
-		callback(new Error("The type (" + classCheck.call(data[attr]).toString() + ") did not match the definition type " + definitions[attr].type + "."));
-	}
-
-	else {
-		callback(null, noDef);
-	}
-}
-
-// Match ================================================================================================
-//	Input- data <object>, attr, definitions<object>, callback <function>
-//	Output- err <Error>, message <String>
-//=======================================================================================================
-var matchCheck = function(data, attr, definitions, callback) {
-		if(definitions[attr].match !== undefined){
-			var reg = new RegExp(definitions[attr].match);
-			if(reg.test(data[attr]))
-				callback(null, "Matches regexp.");
-			else
-				callback(new Error(data[attr] + " does not match the defined regular expression."));
-		}
-		
-		else
-			callback(null, "No regex to match");
-};
-
-// Length ===============================================================================================
-//	Input- data <object>, attr, definitions<object>, callback <function>
-//	Output- err <Error>, message <String>
-//=======================================================================================================
-var lengthCheck = function(data, attr, definitions, callback) {
-	if(definitions[attr].hasOwnProperty("minLength") && definitions[attr].hasOwnProperty("maxLength")){
-		if(definitions[attr].minLength > data[attr].length)
-			callback(data[attr] + " does not meet the defined minmum length requirements.");
-			
-		if(definitions[attr].maxLength < data[attr].length)
-			callback(data[attr] + " does not meet the defined maximum length requirements.");
-	}
-	
-	else
-		callback(null, "Good length");
-};
 
 
 // preValidation  =======================================================================================

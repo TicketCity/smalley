@@ -23,8 +23,15 @@
 {
 	"firstName": {
 		"type": "[object String]",
-		"require": true
+		"require": true,
+		"minLength": 3,
+		"maxLength": 15
 	},
+	"email" : {
+		"type": "[object String]",
+		"require": true,
+		"match": "[a-zA-Z0-9_]+@\\.[a-zA-Z0-9_]{2,4}"
+	}
 	.
 	.
 	.
