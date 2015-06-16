@@ -41,7 +41,7 @@
 #### Example run
 ```javascript
 var smalley = require('smalley')
-var testData = \{data: \{your object to test}, dataDefinition: \'path/to/your/defs\'}
+var testData = \{data: \{your object to test}, definitionPath: \'path/to/your/defs\'}
 smalley.validate(testData, function(err, res) {
 	if(err) 
 		...do something with your err
