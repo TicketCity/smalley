@@ -5,7 +5,7 @@
 var should	= require('should'),
 	appRoot	= require('app-root-path')
 
-describe('#Smalley Val Def Import Tests', function() {
+describe('#Smalley Tests', function() {
 	
 	// Good tests ------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------
@@ -31,18 +31,7 @@ describe('#Smalley Val Def Import Tests', function() {
 		});
 	});
 	
-	it('Should validate data object with sub-object', function(done) {
-		var smalley 	= require('../smalley');
-		var goodInput	= require(appRoot + '/test/testInput/goodData3');
-		
-		smalley.validate({data: goodInput, definitionPath: 'test/customerDefs'}, function(err, results) {
-			should.not.exist(err);
-			results.should.equal("Could not validate zip, but everything else was valid.");
-			done();
-		});
-	});
-	
-	it('Should validate data object array of items', function(done) {
+	it('Should validate sample sale_created event', function(done) {
 		var smalley 	= require('../smalley');
 		var goodInput	= require(appRoot + '/test/testInput/goodData4');
 		
@@ -59,7 +48,6 @@ describe('#Smalley Val Def Import Tests', function() {
 		
 		smalley.validate({data: goodInput, definitionPath: 'test/regexDefs/'}, function(err, results) {
 			should.not.exist(err);
-			results.should.equal("Data was validated.");
 			done();
 		});
 	});

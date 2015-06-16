@@ -1,13 +1,35 @@
-{
-  "email": "testTest@email.com",
-  "items": [{
-    "lineItemId": "12345678-1",
-    "eventId": 1042459,
-    "quantity": 1,
-    "rate": 100.50,
-    "serviceCharge": 20.50,
-    "total": 121.00,
-    "section": "101",
-    "row": "1A"
-  }]
+ { 
+  "email": "test@test.com",           
+  "employeeId": 12345,
+  "orderId": 1234567890,
+  "saleTypeId": 1,
+  "discountCode": "SAVE15",
+  "discountRate": 10.00,
+  "memo": "This is a test sale",
+  "date": "01/01/2016",
+  "items": [
+    {
+      "lineItemId": "1234567890-1",
+      "eventId": 12345678,
+      "vendorId": 12345678,
+      "section": "Lower Grandstand - 101",
+      "row": "A",
+      "quantity": 4,
+      "rate": 25.00,
+      "serviceCharge": 5.00,
+      "tax": 5.89,
+      "inhandDate": "10/10/2016",
+      "shippingInfo": 
+      {
+        "shippingTypeId": 111,
+        "trackingNumber": "1234123412341234",
+        "eticket": "https://some/location/in/a/galaxy/far/away.pdf"                              
+      }
+    }
+  ],
+  "payments": [
+    {
+      "lineItemId": "1234567890-1"
+    }
+  ]
 }

@@ -1,0 +1,46 @@
+{
+	"lineItemId" : {
+		"type" : "[object Number]",
+		"require" : true
+	},
+	"eventId" : {
+		"type": "[object Number]",
+		"require" : true
+	},
+	"vendorId" : {
+		"type" : "[object String]",
+		"require" : false
+	},
+	"section" : {
+		"type" : "[object String]",
+		"require" : true
+	},
+	"row" : {
+		"type" : "[object String]",
+		"require" : true
+	},
+	"quantity" : {
+		"type" : "[object Number]",
+		"require": true
+	},
+	"rate" : {
+		"type" : "[object Number]",
+		"require": true
+	},
+	"serviceCharge" : { 
+		"type" : "[object Number]",
+		"require" : false
+	},
+	"tax" : {
+		"type" : "[object Number]",
+		"require" : false
+	},
+	"inhandDate": {
+		"type" : "[object String]",
+		"require" : false
+	},
+	"shippingInfo" : {
+		"type": "[object Object]",
+		"require": false
+	}
+}

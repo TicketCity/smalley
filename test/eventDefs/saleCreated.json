@@ -1,0 +1,44 @@
+{
+	"email" : {
+		"type" : "[object String]",
+		"require" : true,
+		"match" : "[a-zA-Z0-9_+%]+@[a-zA-Z0-9_+%]+\\.[a-zA-Z0-9_+%]{2,4}"
+	},
+	"employeeId" : {
+		"type": "[object Number]",
+		"require": false
+	},
+	"orderId" : {
+		"type": "[object Number]",
+		"require" : true
+	},
+	"saleTypeId" : {
+		"type" : "[object Number]",
+		"require": false
+	},
+	"discountCode" : {
+		"type" : "[object String]",
+		"require" : false 
+	},
+	"discountRate" : {
+		"type" : "[object Number]",
+		"require" : false
+	},
+	"memo" : {
+		"type" : "[object String]",
+		"require" : false
+	},
+	"date" : {
+		"type" : "[object String]",
+		"require" : false,
+		"match" : "[0-9]{2}\\/[0-9]{2}\\/[0-9]{4}"
+	},
+	"items" : {
+		"type" : "[object Array]",
+		"require" : true
+	},
+	"payments" : {
+		"type" : "[object Array]",
+		"require" : true
+	}
+}

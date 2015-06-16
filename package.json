@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ctmoses/smalley"
+    "url": "https://github.com/TicketCity/smalley"
   },
   "keywords": [
     "validate",
@@ -19,7 +19,7 @@
   "author": {
     "name": "Chris Moses",
     "email": "cmoses@ticketcity.com",
-    "url": "http://ticketcity.com"
+    "url": "https://github.com/ctmoses"
   },
   "license": "MIT",
   "devDependencies": {
@@ -30,6 +30,7 @@
     "app-root-path": "^1.0.0",
     "async": "^1.2.1",
     "glob": "^5.0.10",
+    "unwinder": "^1.0.3",
     "validator": "^3.40.0"
   }
 }

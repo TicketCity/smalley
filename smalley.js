@@ -2,7 +2,7 @@
 var appRoot		= require('app-root-path'),
 	getValDefs	= require('./lib/getValDefs'),
 	async		= require('async'),
-	unwind		= require('./lib/unwind'),
+	unwind		= require('unwinder'),
 	validators	= require('./lib/validators');
 
 
@@ -145,9 +145,7 @@ var preValidation = function(input, callback) {
 				},
 			//flatten the object passed in for reading	
 			function(pCallback){
-				unwind(input.data, function(flatData) {
-					pCallback(null, flatData);
-				});
+				unwind.flatten(input.data, pCallback);
 			}
 		],
 		function(err, res){
