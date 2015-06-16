@@ -69,7 +69,8 @@ var validationRunner = function(data, definitions, callback) {
 
 	// start checking attributes against defs-----------------------------------------------------------
 	for(var attr in data) {
-			
+		if(definitions === undefined)
+			callback(new Error("No definitions file existed at the given path"));	
 		
 		if(definitions[attr] !== undefined){	
 			async.parallel(

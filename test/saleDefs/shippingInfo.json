@@ -1,0 +1,14 @@
+{
+	"shippingTypeId" : {
+		"type": "[object Number]",
+		"require": true
+	},
+	"trackingNumber" : {
+		"type": "[object String]",
+		"require": false
+	},
+	"eticket": {
+		"type": "[object String]",
+		"require": false
+	}
+}
