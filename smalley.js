@@ -44,7 +44,7 @@ module.exports.validate = function(input, callback){
 					}
 					else{
 						if (results.length === 0)
-							callback(null, "Data was validated.")
+							callback(null, "Data was validated.");
 						else
 							callback(null, "Could not validate " + results.join(", ") + ", but everything else was valid.");
 					}	
@@ -58,6 +58,11 @@ module.exports.validate = function(input, callback){
 //	Output- err <Error>, message <string>
 //=======================================================================================================
 var validationRunner = function(data, definitions, callback) {
+	
+	if(definitions === undefined || definitions === null) {
+		callback(new Error("No definitions were found at the given file path."));
+	}
+	
 	var noDef = []; //for tracking attributes without definitions
 
 	// look for missing, but required attributes------------------------------------- 
@@ -72,7 +77,7 @@ var validationRunner = function(data, definitions, callback) {
 		if(definitions === undefined)
 			callback(new Error("No definitions file existed at the given path"));	
 		
-		if(definitions[attr] !== undefined){	
+		else if(definitions[attr] !== undefined){	
 			async.parallel(
 				[
 					//Match types to defs

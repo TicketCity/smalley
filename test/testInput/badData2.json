@@ -1,5 +1,5 @@
 {
 	"firstName" : "Testy",
 	"lastName"	: "Testerino",
-	"phone"		: 5120001111
+	"phone"		: {"stuffs": 5121111111}
 }
