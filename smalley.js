@@ -1,9 +1,9 @@
 'use strict';
 var appRoot		= require('app-root-path'),
-	getValDefs	= require(appRoot + '/lib/getValDefs'),
+	getValDefs	= require('./lib/getValDefs'),
 	async		= require('async'),
 	unwind		= require('unwinder'),
-	validators	= require(appRoot + '/lib/validators');
+	validators	= require('./lib/validators');
 
 
 module.exports.validate = function(input, callback){
