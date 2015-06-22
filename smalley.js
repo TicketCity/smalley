@@ -1,9 +1,9 @@
 'use strict';
 var appRoot		= require('app-root-path'),
-	getValDefs	= require('./lib/getValDefs'),
+	getValDefs	= require(appRoot + '/lib/getValDefs'),
 	async		= require('async'),
 	unwind		= require('unwinder'),
-	validators	= require('./lib/validators');
+	validators	= require(appRoot + '/lib/validators');
 
 
 module.exports.validate = function(input, callback){
@@ -58,77 +58,79 @@ module.exports.validate = function(input, callback){
 //	Output- err <Error>, message <string>
 //=======================================================================================================
 var validationRunner = function(data, definitions, callback) {
-	
-	if(definitions === undefined || definitions === null) {
-		callback(new Error("No definitions were found at the given file path."));
-	}
-	
 	var noDef = []; //for tracking attributes without definitions
+
+	if(definitions === undefined || definitions === null) 
+		return callback(new Error("No definitions were found at the given file path."));
 
 	// look for missing, but required attributes------------------------------------- 
 	for(var def in definitions) {
-		if(definitions[def].require === true && data[def] === undefined){
-			callback(new Error(def + " did not exist, but is a required attribute."));
-		}
+		if(definitions[def].require === true && data[def] === undefined)
+			return callback(new Error(def + " did not exist, but is a required attribute."));
 	}
 
 	// start checking attributes against defs-----------------------------------------------------------
+	var count = 0;
 	for(var attr in data) {
-		if(definitions === undefined)
-			callback(new Error("No definitions file existed at the given path"));	
 		
-		else if(definitions[attr] !== undefined){	
+		//if the definition is undefined, add the attr to the list of non-defined attrs
+		if(definitions[attr] === undefined){
+			count++;
+			noDef.push(attr);
+		}
+		
+		//if the attributes have all been checked, return back to smalley
+	 	if(count === Object.keys(data).length)
+			return callback(null, noDef);	
+		 
+			
+		// if the definitions have the attr, check it
+		if(definitions[attr] !== undefined){	
 			async.parallel(
 				[
 					//Match types to defs
 					function(pCallback) {
 						validators.typeCheck(data, attr, definitions, noDef, function(err, results) {
-							if(err)
-								pCallback(err);
+							if(err) {
+								return pCallback(err);
+							}
 	
 							else
-								pCallback(null, noDef);
-	
+								return pCallback(null, noDef);
 						});
 					},
 					//if a regexp is defined, check for matching
 					function(pCallback) {
 						validators.matchCheck(data, attr, definitions, function(err, results) {
 							if(err)
-								pCallback(err);
+								return pCallback(err);
 							else
-								pCallback(null, results);
+								return pCallback(null, results);
 						});
 					},
-					
 					function(pCallback) {
 						validators.lengthCheck(data, attr, definitions, function(err, results) {
 							if(err)
-								pCallback(err);
+								return pCallback(err);
 							else
-								pCallback(null, results);
+								return pCallback(null, results);
 						});
 					}
 				],
 				function(err, finished){
 					if(err){
-						callback(err);
+						return callback(err);
 					}
-					
 					else{
-						noDef = finished[0];
-						callback(null, finished[0])
+						count++;
+						if(count === Object.keys(data).length)
+							return callback(null, noDef);	 
 					}
 				});
 		}
-		
-		else {
-			noDef.push(attr);
-			callback(null, noDef);
-		}
 	}	
 };
-
+module.exports.validationRunner = validationRunner;
 
 
 // preValidation  =======================================================================================
@@ -157,5 +159,6 @@ var preValidation = function(input, callback) {
 		function(err, res){
 			callback(null, res);
 		});
-}
+};
+module.exports.preValidation = preValidation;
 

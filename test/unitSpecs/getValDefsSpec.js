@@ -3,10 +3,11 @@
 'use strict';
 
 var should	= require('should');
+var appRoot	= require('app-root-path');
 
 describe('#Get Validation Definition Tests', function() {
 	it('Should get valid json files and add it to validationDefinitions object', function(done) {
-		var getValDefs	= require('../lib/getValDefs');
+		var getValDefs	= require(appRoot + '/lib/getValDefs');
 		var expected 	= {
 							"phone" 	: {	"type" 	: "[object String]", "require"	: true},
 							"firstName" : { "type"	: "[object String]", "require" 	: true},
@@ -23,7 +24,7 @@ describe('#Get Validation Definition Tests', function() {
 	});
 	
 	it('Should err with a filepath that has no defs', function(done) {
-		var getValDefs	= require('../lib/getValDefs');
+		var getValDefs	= require(appRoot + '/lib/getValDefs');
 		
 		getValDefs('test/', function(err, defs) {
 			should.exist(err);

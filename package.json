@@ -4,7 +4,9 @@
   "description": "Validates data passed in against a validation definition config.",
   "main": "smalley.js",
   "scripts": {
-    "test": "mocha"
+    "unit": "mocha test/unitSpecs/",
+    "int": "mocha test/integrationSpecs/",
+    "all": "npm run unit && npm run int"
   },
   "repository": {
     "type": "git",
