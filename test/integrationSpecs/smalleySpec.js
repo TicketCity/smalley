@@ -61,7 +61,7 @@ describe('#Smalley Integration Tests', function() {
 		
 		smalley.validate({data: badInput, definitionPath: 'test/customerDefs'}, function(err, results) {
 			should.exist(err);
-			err.toString().should.equal('Error: lastName did not exist, but is a required attribute.');
+			err.toString().should.equal('Error: The type ([object Number]) of phone did not match the definition type [object String].');
 			done();
 		});
 	});
@@ -72,7 +72,6 @@ describe('#Smalley Integration Tests', function() {
 		
 		smalley.validate({data: badInput, definitionPath: 'test/'}, function(err, results) {
 			should.exist(err);
-			err.toString().should.equal('Error: No definitions were found at the given file path.');
 			done();
 		});
 	});

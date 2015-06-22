@@ -1,6 +1,6 @@
 {
 	"lineItemId" : {
-		"type" : "[object Number]",
+		"type" : "[object String]",
 		"require" : true
 	},
 	"eventId" : {
@@ -8,7 +8,7 @@
 		"require" : true
 	},
 	"vendorId" : {
-		"type" : "[object String]",
+		"type" : "[object Number]",
 		"require" : false
 	},
 	"section" : {
