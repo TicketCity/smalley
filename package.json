@@ -1,6 +1,6 @@
 {
   "name": "smalley",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Validates data passed in against a validation definition config.",
   "main": "smalley.js",
   "scripts": {
