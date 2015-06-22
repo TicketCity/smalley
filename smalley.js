@@ -90,37 +90,20 @@ var validationRunner = function(data, definitions, callback) {
 				[
 					//Match types to defs
 					function(pCallback) {
-						validators.typeCheck(data, attr, definitions, noDef, function(err, results) {
-							if(err) {
-								return pCallback(err);
-							}
-	
-							else
-								return pCallback(null, noDef);
-						});
+						validators.typeCheck(data, attr, definitions, noDef, pCallback);
 					},
 					//if a regexp is defined, check for matching
 					function(pCallback) {
-						validators.matchCheck(data, attr, definitions, function(err, results) {
-							if(err)
-								return pCallback(err);
-							else
-								return pCallback(null, results);
-						});
+						validators.matchCheck(data, attr, definitions, pCallback);
 					},
 					function(pCallback) {
-						validators.lengthCheck(data, attr, definitions, function(err, results) {
-							if(err)
-								return pCallback(err);
-							else
-								return pCallback(null, results);
-						});
+						validators.lengthCheck(data, attr, definitions, pCallback);
 					}
 				],
 				function(err, finished){
-					if(err){
+					if(err)
 						return callback(err);
-					}
+					
 					else{
 						count++;
 						if(count === Object.keys(data).length)
@@ -142,23 +125,14 @@ var preValidation = function(input, callback) {
 		[
 			//get the definitions read in
 			function(pCallback) {
-					getValDefs(input.definitionPath, function(err, foundDefs) {
-						if(err)
-							pCallback(err);
-				
-						else
-							pCallback(null, foundDefs);
-						
-					});
+					getValDefs(input.definitionPath, pCallback);
 				},
 			//flatten the object passed in for reading	
 			function(pCallback){
 				unwind.flatten(input.data, pCallback);
 			}
 		],
-		function(err, res){
-			callback(null, res);
-		});
+		callback);
 };
 module.exports.preValidation = preValidation;
 
