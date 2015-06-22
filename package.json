@@ -6,7 +6,7 @@
   "scripts": {
     "unit": "mocha test/unitSpecs/",
     "int": "mocha test/integrationSpecs/",
-    "all": "npm run unit && npm run int"
+    "test": "npm run unit && npm run int"
   },
   "repository": {
     "type": "git",
