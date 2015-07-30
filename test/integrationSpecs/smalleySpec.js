@@ -76,4 +76,14 @@ describe('#Smalley Integration Tests', function() {
 		});
 	});
 	
+	it('Should return an error if field was null but config not nullable', function(done) {
+		var smalley 	= require(appRoot + '/smalley');
+		var badInput	= require(appRoot + '/test/testInput/badData4'); 
+		
+		smalley.validate({data: badInput, definitionPath: 'test/eventDefs'}, function(err, results) {
+			should.exist(err);
+			err.toString().should.equal("Error: The type ([object Null]) of orderId did not match the definition type [object Number].");
+			done();
+		});
+	});
 });

@@ -43,13 +43,44 @@ describe('#Validator Tests', function() {
 		var typeInput 	= {"phone": 1234567891};
 		var typeDef	  	= {"phone": {
 					"type": "[object String]",
-					"require": true
+					"require": true,
+					"nullable" : false
 				}
 			};
 		
 		validators.typeCheck(typeInput, "phone", typeDef, [], function(err, res) {
 			should.exist(err);
 			err.toString().should.equal("Error: The type ([object Number]) of phone did not match the definition type [object String].")
+			done();
+		});
+	});
+	
+	it('Should skip type check if nullable is true', function(done) {
+		var typeInput 	= {"phone": null};
+		var typeDef	  	= {"phone": {
+					"type": "[object String]",
+					"require"	: true,
+					"nullable" 	: true 
+				}
+			};
+		validators.typeCheck(typeInput, "phone", typeDef, [], function(err, res) {
+			should.not.exist(err);
+			res.length.should.equal(0);
+			done();
+		});
+	});
+	
+	it('Should error type check if nullable is false but data is null', function(done) {
+		var typeInput 	= {"phone": null};
+		var typeDef	  	= {"phone": {
+					"type": "[object String]",
+					"require"	: true,
+					"nullable" 	: false 
+				}
+			};
+		validators.typeCheck(typeInput, "phone", typeDef, [], function(err, res) {
+			should.exist(err);
+			err.toString().should.equal("Error: The type ([object Null]) of phone did not match the definition type [object String].");
 			done();
 		});
 	});

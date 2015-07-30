@@ -2,43 +2,53 @@
 	"email" : {
 		"type" : "[object String]",
 		"require" : true,
+		"nullable": false,
 		"match" : "[a-zA-Z0-9_+%]+@[a-zA-Z0-9_+%]+\\.[a-zA-Z0-9_+%]{2,4}"
 	},
 	"employeeId" : {
 		"type": "[object Number]",
-		"require": false
+		"require": false,
+		"nullable": false
 	},
 	"orderId" : {
 		"type": "[object Number]",
-		"require" : true
+		"require" : true,
+		"nullable": false
 	},
 	"saleTypeId" : {
 		"type" : "[object Number]",
-		"require": false
+		"require": false,
+		"nullable": false
 	},
 	"discountCode" : {
 		"type" : "[object String]",
-		"require" : false 
+		"require" : false,
+		"nullable": true 
 	},
 	"discountRate" : {
 		"type" : "[object Number]",
-		"require" : false
+		"require" : false,
+		"nullable": true
 	},
 	"memo" : {
 		"type" : "[object String]",
-		"require" : false
+		"require" : false,
+		"nullable": true
 	},
 	"date" : {
 		"type" : "[object String]",
 		"require" : false,
+		"nullable": false,
 		"match" : "[0-9]{2}\\/[0-9]{2}\\/[0-9]{4}"
 	},
 	"items" : {
 		"type" : "[object Array]",
-		"require" : true
+		"require" : true,
+		"nullable": false
 	},
 	"payments" : {
 		"type" : "[object Array]",
-		"require" : true
+		"require" : true,
+		"nullable": false
 	}
 }

@@ -1,7 +1,7 @@
  { 
   "email": "test@test.com",           
   "employeeId": 12345,
-  "orderId": 1234567890,
+  "orderId": null,
   "saleTypeId": 1,
   "discountCode": null,
   "discountRate": null,
