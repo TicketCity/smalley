@@ -2,7 +2,7 @@
 # [Smalley](https://en.wikipedia.org/wiki/Stuart_Smalley)
 ###### To give your data a checkup from the neckup, and affirmation that your data is valid, it's got everything it needs and, doggone it, people will like it!
 
-
+### [Build Status](https://travis-ci.org/TicketCity/smalley)
 ----------
 
 
